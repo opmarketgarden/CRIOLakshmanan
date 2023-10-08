@@ -1,8 +1,13 @@
 package demo;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import com.github.dockerjava.api.model.Driver;
@@ -11,11 +16,14 @@ import com.github.dockerjava.api.model.Links;
 import org.openqa.selenium.chrome.ChromeDriver;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
+import org.apache.commons.io.FileUtils;
 import org.checkerframework.checker.units.qual.s;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 //Selenium Imports
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.BrowserType;
@@ -182,6 +190,42 @@ public class TestCases {
         s.selectByIndex(2);
         System.out.println("user rating/IMDB rating"+driver.findElement(By.xpath("(//*[contains(@class,'list-summary-item')]/div[2]/div/descendant::a)[1]")).getText());
         System.out.println("end Test case: testCase06");   
+    }
+
+    public void TestCase07() throws InterruptedException, IOException
+    {
+        System.out.println("Start Test case: testCase07");
+        driver.get(" https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_win_open"); 
+        Thread.sleep(1000);
+       // wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//iframe")));
+        driver.switchTo().frame("iframeResult");
+        driver.findElement(By.xpath("//button[contains(text(),'Try it')]")).click();
+        Set<String> winlist =  driver.getWindowHandles();
+        for (String l : winlist) 
+        {
+           if(!driver.getWindowHandle().equals(l))
+           {
+               driver.switchTo().window(l);
+               break;
+           }    
+        }
+
+        System.out.println(driver.getCurrentUrl() );
+        System.out.println(driver.getTitle());
+        TakesScreenshot ts = (TakesScreenshot)driver; 
+        File screenshot = ts.getScreenshotAs(OutputType.FILE);
+        System.out.println(System.getProperty("user.dir"));
+        FileUtils.copyFile(screenshot, new File(System.getProperty("user.dir")+"\\Screenshot\\s1"));
+        Set<String> winlist1 =  driver.getWindowHandles();
+        for (String l : winlist1) 
+        {
+           if(!driver.getWindowHandle().equals(l))
+           {
+               driver.switchTo().window(l);
+               break;
+           }    
+        }
+        System.out.println("end Test case: testCase07");
     }
 
     public boolean Isposternamepresent(List<WebElement> s,String name)
