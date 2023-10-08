@@ -61,6 +61,18 @@ public class TestCases {
         System.out.println("end Test case: testCase01");
     }
 
+    public void TestCase02() throws InterruptedException
+    {
+        System.out.println("Start Test case: testCase02");
+        driver.get("https://in.bookmyshow.com/explore/home/chennai");
+        List<WebElement> links = driver.findElements(By.tagName("a"));
+        wait.until(ExpectedConditions.visibilityOfAllElements(links));
+        Thread.sleep(5000);
+        links = driver.findElements(By.tagName("a"));
+        System.out.println(links.size());
+        System.out.println("end Test case: testCase02");
+    }
+
     public boolean IsLinkPresent(List<WebElement> f) {
         for (WebElement e : f) {
             String link = e.getAttribute("href");
