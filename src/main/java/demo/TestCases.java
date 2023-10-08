@@ -1,5 +1,7 @@
 package demo;
 
+import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -71,6 +73,59 @@ public class TestCases {
         links = driver.findElements(By.tagName("a"));
         System.out.println(links.size());
         System.out.println("end Test case: testCase02");
+    }
+
+    public void TestCase03() throws InterruptedException
+    {
+        System.out.println("Start Test case: testCase03");
+        driver.get("https://in.linkedin.com/");
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("session_key")));
+        WebElement emailtxt = driver.findElement(By.id("session_key"));
+        emailtxt.sendKeys("murugappanlakshnanan@gmail.com");
+        WebElement pasdtxt = driver.findElement(By.id("session_password"));
+        pasdtxt.sendKeys("Murugu*1412");
+        WebElement signinbtn = driver.findElement(By.xpath("//*[@data-id = 'sign-in-form__submit-btn']"));
+        signinbtn.click();
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[contains(@class,'share-box-feed-entry__trigger')]")));
+        WebElement createpostbutton = driver.findElement(By.xpath("//button[contains(@class,'share-box-feed-entry__trigger')]"));
+        createpostbutton.click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@aria-placeholder='What do you want to talk about?']")));
+        WebElement posttextarea = driver.findElement(By.xpath("//*[@aria-placeholder='What do you want to talk about?']"));
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@aria-placeholder='What do you want to talk about?']")));
+        Thread.sleep(2000);
+        posttextarea.click();
+        LocalDateTime dateTime = LocalDateTime.of(2023, 10, 8, 12, 0, 5);
+        long secondsToAdd = 38; // Number of seconds to add
+        int newDateTime = dateTime.getSecond();
+        posttextarea.sendKeys("Test12" + dateTime.getSecond() + dateTime.getNano());
+        Thread.sleep(2000);
+        WebElement userdropdown = driver.findElement(By.xpath("//*[@id='share-to-linkedin-modal__header']/button"));
+        userdropdown.click();
+        WebElement connectionsonly = driver.findElement(By.xpath("//*[contains(text(),'Connections only')]"));
+        connectionsonly.click();
+        WebElement donebutton = driver.findElement(By.xpath("//*[contains(@class,'share-box-footer__primary-btn')]"));
+        donebutton.click();
+        WebElement postbutton = driver.findElement(By.xpath("//*[contains(@class,'share-actions__primary-action')]"));
+        wait.until(ExpectedConditions.elementToBeClickable(postbutton));
+        postbutton.click();
+        Thread.sleep(5000);
+        wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//*[contains(@class, 'update-components-actor__title')]/span/span/span")));
+        List<WebElement> postername = driver.findElements(By.xpath("//*[contains(@class, 'update-components-actor__title')]/span/span/span"));
+        Assert.assertTrue(Isposternamepresent(postername, "lotus thamarai"));
+        System.out.println("end Test case: testCase03"); 
+    }
+
+    public boolean Isposternamepresent(List<WebElement> s,String name)
+    {
+       for (WebElement webElement : s) 
+       {
+          if(webElement.getText().contains(name))
+          {
+              return true;
+          }    
+       }
+
+       return false;
     }
 
     public boolean IsLinkPresent(List<WebElement> f) {
