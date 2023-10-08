@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import com.github.dockerjava.api.model.Driver;
 import com.github.dockerjava.api.model.Links;
 
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -154,6 +155,33 @@ public class TestCases {
         driver.switchTo().frame(1);
         System.out.println(driver.findElement(By.xpath("//html/body")).getText());
         System.out.println("end Test case: testCase05"); 
+    }
+
+    public void TestCase06() throws InterruptedException
+    {
+        System.out.println("Start Test case: testCase06");
+        driver.get("https://www.imdb.com/chart/top"); 
+        //wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='sort-by-selector']")));
+        WebElement sortby = driver.findElement(By.xpath("//*[@id='sort-by-selector']"));
+        sortby.click();
+        Select s = new Select(sortby);
+        s.selectByIndex(4);
+        System.out.println("Heighest rated movie"+driver.findElement(By.xpath("(//*[contains(@class,'list-summary-item')]/div[2]/div/descendant::a)[1]")).getText());
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//*[contains(@class,'metadata-list--base')]/li")));
+        Thread.sleep(2000);
+        System.out.println("Total movies"+driver.findElements(By.xpath("//*[contains(@class,'metadata-list--base')]/li")).size());
+        sortby.click();
+        s.selectByIndex(3);
+        WebElement sort = driver.findElement(By.xpath("//*[@id='swap-sort-order-button']"));
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//*[contains(@class,'list-summary-item')]/div[2]/div/descendant::a)[1]")));
+        sort.click();
+        System.out.println("Oldest movie"+driver.findElement(By.xpath("(//*[contains(@class,'list-summary-item')]/div[2]/div/descendant::a)[1]")).getText());
+        sort.click();
+        System.out.println("Latest movie"+driver.findElement(By.xpath("(//*[contains(@class,'list-summary-item')]/div[2]/div/descendant::a)[1]")).getText());
+        sortby.click();
+        s.selectByIndex(2);
+        System.out.println("user rating/IMDB rating"+driver.findElement(By.xpath("(//*[contains(@class,'list-summary-item')]/div[2]/div/descendant::a)[1]")).getText());
+        System.out.println("end Test case: testCase06");   
     }
 
     public boolean Isposternamepresent(List<WebElement> s,String name)

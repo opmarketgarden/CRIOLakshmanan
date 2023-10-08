@@ -14,6 +14,7 @@ public class App {
         tests.TestCase03();  
         tests.TestCase04();
         tests.TestCase05();
+        tests.TestCase06();
         //END Tests
         tests.endTest(); // End your test by clearning connections and closing browser
     }
