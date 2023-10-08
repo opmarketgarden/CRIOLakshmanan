@@ -132,6 +132,28 @@ public class TestCases {
         }
 
         System.out.println("nameofmovie"+ secondElement.getText());
+        System.out.println("end Test case: testCase04"); 
+    }
+
+    public void TestCase05()
+    {
+        System.out.println("Start Test case: testCase05");
+        driver.get("https://the-internet.herokuapp.com/nested_frames");
+        wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//frame")));
+        driver.switchTo().frame(driver.findElement(By.xpath("//*[@name='frame-top']")));
+        driver.switchTo().frame(0);
+        System.out.println(driver.findElement(By.xpath("//html/body")).getText());
+        driver.switchTo().parentFrame();
+        driver.switchTo().frame(1);
+        System.out.println(driver.findElement(By.xpath("//html/body")).getText());
+        driver.switchTo().parentFrame();
+        driver.switchTo().frame(2);
+        System.out.println(driver.findElement(By.xpath("//html/body")).getText());
+        driver.switchTo().parentFrame();
+        driver.switchTo().parentFrame();
+        driver.switchTo().frame(1);
+        System.out.println(driver.findElement(By.xpath("//html/body")).getText());
+        System.out.println("end Test case: testCase05"); 
     }
 
     public boolean Isposternamepresent(List<WebElement> s,String name)
