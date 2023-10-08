@@ -115,6 +115,25 @@ public class TestCases {
         System.out.println("end Test case: testCase03"); 
     }
 
+    public void TestCase04()
+    {
+        System.out.println("Start Test case: testCase04");
+        driver.get("https://in.bookmyshow.com/explore/home/chennai");
+        //List<WebElement> image = driver.findElements(By.xpath("//*[contains(text(),'Movies in Chennai')]/../following-sibling::div[4]/descendant::img"));
+        List<WebElement> imageurl = driver.findElements(By.xpath("(//*[contains(text(),'Recommended Movies')]/../..)[2]/../following-sibling::div/descendant::img"));
+        wait.until(ExpectedConditions.visibilityOfAllElements(imageurl.get(1)));
+        WebElement secondElement = driver.findElement(By.xpath("((//*[contains(text(),'Recommended Movies')]/../..)[2]/../following-sibling::div/descendant::img)[2]/../../following-sibling::div/div/div"));
+        for (WebElement img : imageurl) 
+        {
+           if(img.getAttribute("src") != null)
+           {
+               System.out.println(img.getAttribute("src").toString());
+           }    
+        }
+
+        System.out.println("nameofmovie"+ secondElement.getText());
+    }
+
     public boolean Isposternamepresent(List<WebElement> s,String name)
     {
        for (WebElement webElement : s) 
