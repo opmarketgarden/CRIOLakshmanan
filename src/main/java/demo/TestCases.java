@@ -215,7 +215,7 @@ public class TestCases {
         TakesScreenshot ts = (TakesScreenshot)driver; 
         File screenshot = ts.getScreenshotAs(OutputType.FILE);
         System.out.println(System.getProperty("user.dir"));
-        FileUtils.copyFile(screenshot, new File(System.getProperty("user.dir")+"\\Screenshot\\s1"));
+        FileUtils.copyFile(screenshot, new File(System.getProperty("user.dir")+"/Screenshot1/s2.png"));
         Set<String> winlist1 =  driver.getWindowHandles();
         for (String l : winlist1) 
         {
